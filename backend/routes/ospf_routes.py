@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-
-from repositories.ospf_repository import OspfRepository
-from services.routing import configure_ospf
+from backend.database import get_db
+from backend.repositories.ospf_repository import OspfRepository
+from backend.services.routing import configure_ospf
 
 router = APIRouter(prefix="/api/ospf", tags=["OSPF"])
 

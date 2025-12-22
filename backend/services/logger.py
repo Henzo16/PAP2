@@ -1,4 +1,4 @@
-from models.log import Log
+from backend.models.log import Log
 from sqlalchemy.orm import Session
 
 def save_log(db: Session, user_id: int, router_id: int, action: str, commands: list[str], output: str):

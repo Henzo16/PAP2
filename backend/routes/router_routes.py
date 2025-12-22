@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from repositories.router_repository import RouterRepository
-from services.router_auto_detect import detect_router
+from backend.database import get_db
+from backend.repositories.router_repository import RouterRepository
+from backend.services.router_auto_detect import detect_router
 
 # Router principal para CRUD
 router = APIRouter(prefix="/api/routers", tags=["Roteadores"])

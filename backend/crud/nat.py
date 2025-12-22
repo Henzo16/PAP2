@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from models.nat import NatConfig
-from schemas.nat import NatCreate, NatUpdate
-from services.cisco_executor import execute_commands
+from backend.models.nat import NatConfig
+from backend.schemas.nat import NatCreate, NatUpdate
+from backend.services.cisco_executor import execute_commands
 
 
 # ----------------------------------------------------

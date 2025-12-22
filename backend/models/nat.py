@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
-from database import Base
+from backend.database import Base
 import enum
 
 class NatType(enum.Enum):

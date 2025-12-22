@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
-from models.ospf import OspfRoute
-from schemas.ospf import OspfCreate, OspfUpdate
-from services.cisco_ospf_builder import build_ospf_commands
-from services.cisco_executor import execute_commands
+from backend.models.ospf import OspfRoute
+from backend.schemas.ospf import OspfCreate, OspfUpdate
+from backend.services.cisco_ospf_builder import build_ospf_commands
+from backend.services.cisco_executor import execute_commands
 
 
 def create_ospf(db: Session, data: OspfCreate):

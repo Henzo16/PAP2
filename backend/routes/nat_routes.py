@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from repositories.nat_repository import NatRepository
-from services.nat import configure_static_nat, configure_dynamic_nat, configure_nat_overload
+from backend.database import get_db
+from backend.repositories.nat_repository import NatRepository
+from backend.services.nat import configure_static_nat, configure_dynamic_nat, configure_nat_overload
 
 router = APIRouter(prefix="/api/nat", tags=["NAT"])
 

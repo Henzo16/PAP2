@@ -3,7 +3,7 @@
 import logging
 from fastapi import HTTPException
 from netmiko import ConnectHandler
-from config import ROUTER
+from backend.config import ROUTER
 from netmiko import NetmikoTimeoutException, NetmikoAuthenticationException
 
 

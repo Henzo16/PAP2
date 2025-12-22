@@ -1,8 +1,8 @@
 from fastapi import Request, HTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
-from auth.jwt import decode_access_token
-from crud.user import get_user_by_email
-from database import SessionLocal
+from backend.auth.jwt import decode_access_token
+from backend.crud.user import get_user_by_email
+from backend.database import SessionLocal
 
 PUBLIC_PATHS = [
     "/api/auth/login",

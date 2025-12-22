@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from models.dhcp import DhcpConfig
-from schemas.dhcp import DhcpCreate, DhcpUpdate
-from services.cisco_executor import execute_commands
+from backend.models.dhcp import DhcpConfig
+from backend.schemas.dhcp import DhcpCreate, DhcpUpdate
+from backend.services.cisco_executor import execute_commands
 
 # -----------------------------
 # CREATE DHCP

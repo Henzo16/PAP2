@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from repositories.dhcp_repository import DhcpRepository
-from services.dhcp import configure_dhcp
+from backend.database import get_db
+from backend.repositories.dhcp_repository import DhcpRepository
+from backend.services.dhcp import configure_dhcp
 
 router = APIRouter(prefix="/api/dhcp", tags=["DHCP"])
 

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.vlan import Vlan
+from backend.models.vlan import Vlan
 
 class VlanRepository:
 

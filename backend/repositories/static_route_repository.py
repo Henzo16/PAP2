@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
-from models.static_route import StaticRoute
+from backend.models.static_route import StaticRoute
 
 class StaticRouteRepository:
-
+    
     @staticmethod
     def create(db: Session, data):
         route = StaticRoute(**data)

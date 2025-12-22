@@ -2,10 +2,10 @@
 
 from netmiko import ConnectHandler
 from fastapi import HTTPException
-from models.router import Roteador
+from backend.models.router import Roteador
 from sqlalchemy.orm import Session
 
-from services.logger import save_log
+from backend.services.logger import save_log
 
 def execute_commands(db, router_id: int, commands: list[str], user_id: int | None = 1):
     """

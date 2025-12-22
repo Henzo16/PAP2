@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
-from models.static_route import StaticRoute
-from schemas.static_route import StaticRouteCreate, StaticRouteUpdate
-from services.cisco_static_builder import build_static_route_commands
-from services.cisco_executor import execute_commands
+from backend.models.static_route import StaticRoute
+from backend.schemas.static_route import StaticRouteCreate, StaticRouteUpdate
+from backend.services.cisco_static_builder import build_static_route_commands
+from backend.services.cisco_executor import execute_commands
 
 
 def create_static_route(db: Session, data: StaticRouteCreate):

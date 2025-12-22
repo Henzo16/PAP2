@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.acl import Acl
+from backend.models.acl import Acl
 
 class AclRepository:
 

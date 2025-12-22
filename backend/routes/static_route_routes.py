@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from database import get_db
+from backend.database import get_db
 from sqlalchemy.orm import Session
 
-from repositories.static_route_repository import StaticRouteRepository
-from services.routing import configure_static_route
+from backend.repositories.static_route_repository import StaticRouteRepository
+from backend.services.routing import configure_static_route
 
 router = APIRouter(prefix="/api/static-routes", tags=["Static Routes"])
 

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from models.vlan import Vlan
-from schemas.vlan import VlanCreate, VlanUpdate
-from services.cisco_executor import execute_commands
+from backend.models.vlan import Vlan
+from backend.schemas.vlan import VlanCreate, VlanUpdate
+from backend.services.cisco_executor import execute_commands
 
 
 # COMMAND BUILDER -----------------------------------------

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from repositories.acl_repository import AclRepository
-from services.acl import configure_standard_acl, configure_extended_acl, configure_named_acl
+from backend.database import get_db
+from backend.repositories.acl_repository import AclRepository
+from backend.services.acl import configure_standard_acl, configure_extended_acl, configure_named_acl
 
 router = APIRouter(prefix="/api/acl", tags=["ACL"])
 

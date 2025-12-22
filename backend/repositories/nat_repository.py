@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.nat import NatConfig
+from backend.models.nat import NatConfig
 
 class NatRepository:
 

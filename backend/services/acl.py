@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
-from services.router import send_to_router
+from backend.services.router import send_to_router
 
 # -----------------------------
 # 1. ACL PADRÃO (Standard ACL)

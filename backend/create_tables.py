@@ -1,15 +1,15 @@
-from database import Base, engine
+from backend.database import Base, engine
 
 # IMPORTAR TODOS OS MODELS
-from models.router import Roteador
-from models.dhcp import DhcpConfig
-from models.nat import NatConfig
-from models.vlan import Vlan
-from models.acl import Acl
-from models.static_route import StaticRoute
-from models.ospf import OspfRoute
-from models.user import User
-from models.log import Log
+from backend.models.router import Roteador
+from backend.models.dhcp import DhcpConfig
+from backend.models.nat import NatConfig
+from backend.models.vlan import Vlan
+from backend.models.acl import Acl
+from backend.models.static_route import StaticRoute
+from backend.models.ospf import OspfRoute
+from backend.models.user import User
+from backend.models.log import Log
 
 print("📡 Criando tabelas no PostgreSQL...")
 Base.metadata.create_all(bind=engine)

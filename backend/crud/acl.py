@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
-from models.acl import Acl
-from schemas.acl import AclCreate, AclUpdate
-from services.cisco_acl_builder import build_acl_commands
-from services.cisco_executor import execute_commands
+from backend.models.acl import Acl
+from backend.schemas.acl import AclCreate, AclUpdate
+from backend.services.cisco_acl_builder import build_acl_commands
+from backend.services.cisco_executor import execute_commands
 
 
 def create_acl(db: Session, data: AclCreate):

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from repositories.vlan_repository import VlanRepository
-from services.vlan import configure_vlan
+from backend.database import get_db
+from backend.repositories.vlan_repository import VlanRepository
+from backend.services.vlan import configure_vlan
 
 router = APIRouter(prefix="/api/vlan", tags=["VLAN"])
 

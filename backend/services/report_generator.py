@@ -1,5 +1,5 @@
 from reportlab.pdfgen import canvas
-from models.log import Log
+from backend.models.log import Log
 
 def generate_pdf(logs: list[Log], filename="relatorio.pdf"):
     c = canvas.Canvas(filename)

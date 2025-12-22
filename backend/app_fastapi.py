@@ -1,79 +1,63 @@
-from fastapi import FastAPI, HTTPException
-from schemas.router import RoteadorCreate, RoteadorResponse
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.exceptions import RequestValidationError
-from netmiko import NetmikoTimeoutException, NetmikoAuthenticationException
-import logging
-from fastapi import Depends
-from services.detector import detect_router
-from middleware.auth_middleware import AuthMiddleware
-from routes.router_routes import router as router_routes
-from starlette.responses import JSONResponse
-from auth.deps import get_current_user
-from database import get_db
-from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi import Request
-from fastapi import Depends
-from sqlalchemy.orm import Session
-from database import get_db
-from models.router import Roteador
-from crud.dhcp import create_dhcp, get_dhcp_by_router, update_dhcp, delete_dhcp
-from schemas.dhcp import DhcpCreate, DhcpUpdate, DhcpOut
-from schemas.nat import NatCreate, NatUpdate, NatOut
-from crud.nat import create_nat, get_nat_by_router, update_nat, delete_nat
-from crud.vlan import (
-    create_vlan,
-    get_vlans_by_router as get_vlan_by_router,
-    update_vlan,
-    delete_vlan
-)
-
-from schemas.vlan import VlanCreate, VlanUpdate, VlanOut
-from crud.acl import (
-    create_acl,
-    get_acls_by_router as get_acl_by_router,
-    update_acl,
-    delete_acl
-)
-
-from schemas.acl import AclCreate, AclUpdate, AclOut
-from crud.static_route import create_static_route, get_static_routes_by_router, update_static_route, delete_static_route
-from schemas.static_route import StaticRouteCreate, StaticRouteUpdate, StaticRouteOut
-from crud.ospf import create_ospf, get_ospf_by_router, update_ospf, delete_ospf
-from schemas.ospf import OspfCreate, OspfUpdate, OspfOut
-from fastapi.responses import FileResponse
-from models.log import Log
-from services.pdf_generator import generate_log_pdf
-from routes import auth
-
-from routes.router_routes import router as routers_routes
-from routes.dhcp_routes import router as dhcp_routes
-from routes.nat_routes import router as nat_routes
-from routes.vlan_routes import router as vlan_routes
-from routes.acl_routes import router as acl_routes
-from routes.static_route_routes import router as static_routes
-from routes.ospf_routes import router as ospf_routes
-from auth.deps import get_current_user
-
-# Importação dos serviços e modelos melhores
-from services.dhcp import DhcpConfig, configure_dhcp
-from services.nat import StaticNatConfig, DynamicNatConfig, NatOverloadConfig, configure_static_nat, configure_dynamic_nat, configure_nat_overload
-from services.routing import StaticRouteConfig, OspfConfig, InterVlanRoutingConfig, configure_static_route, configure_ospf, configure_inter_vlan_routing
-from services.vlan import VlanConfig, configure_vlan
-from services.acl import (
-    StandardAclRule,
-    ExtendedAclRule,
-    NamedAclRule,
-    configure_standard_acl,
-    configure_extended_acl,
-    configure_named_acl,
-)
-
-from services.router import check_current_config, clear_router_config
-from fastapi import Depends
-from dependencies import get_db
 from fastapi.middleware.cors import CORSMiddleware
-from routes import auth
+from starlette.middleware.base import BaseHTTPMiddleware
+from sqlalchemy.orm import Session
+
+import logging
+from netmiko import NetmikoTimeoutException, NetmikoAuthenticationException
+
+# --- Schemas ---
+from backend.schemas.router import RoteadorCreate, RoteadorResponse
+from backend.schemas.dhcp import DhcpCreate, DhcpUpdate, DhcpOut
+from backend.schemas.nat import NatCreate, NatUpdate, NatOut
+from backend.schemas.vlan import VlanCreate, VlanUpdate, VlanOut
+from backend.schemas.acl import AclCreate, AclUpdate, AclOut
+from backend.schemas.static_route import StaticRouteCreate, StaticRouteUpdate, StaticRouteOut
+from backend.schemas.ospf import OspfCreate, OspfUpdate, OspfOut
+
+# --- Models ---
+from backend.models.router import Roteador
+from backend.models.log import Log
+
+# --- Services ---
+from backend.services.detector import detect_router
+from backend.services.dhcp import DhcpConfig, configure_dhcp
+from backend.services.nat import StaticNatConfig, DynamicNatConfig, NatOverloadConfig, configure_static_nat, configure_dynamic_nat, configure_nat_overload
+from backend.services.routing import StaticRouteConfig, OspfConfig, InterVlanRoutingConfig, configure_static_route, configure_ospf, configure_inter_vlan_routing
+from backend.services.vlan import VlanConfig, configure_vlan
+from backend.services.acl import StandardAclRule, ExtendedAclRule, NamedAclRule, configure_standard_acl, configure_extended_acl, configure_named_acl
+from backend.services.router import check_current_config, clear_router_config
+from backend.services.pdf_generator import generate_log_pdf
+
+# --- CRUD ---
+from backend.crud.dhcp import create_dhcp, get_dhcp_by_router, update_dhcp, delete_dhcp
+from backend.crud.nat import create_nat, get_nat_by_router, update_nat, delete_nat
+from backend.crud.vlan import create_vlan, get_vlans_by_router as get_vlan_by_router, update_vlan, delete_vlan
+from backend.crud.acl import create_acl, get_acls_by_router as get_acl_by_router, update_acl, delete_acl
+from backend.crud.static_route import create_static_route, get_static_routes_by_router, update_static_route, delete_static_route
+from backend.crud.ospf import create_ospf, get_ospf_by_router, update_ospf, delete_ospf
+
+# --- Routes ---
+from backend.routes.router_routes import router as routers_routes
+from backend.routes.dhcp_routes import router as dhcp_routes
+from backend.routes.nat_routes import router as nat_routes
+from backend.routes.vlan_routes import router as vlan_routes
+from backend.routes.acl_routes import router as acl_routes
+from backend.routes.static_route_routes import router as static_routes
+from backend.routes.ospf_routes import router as ospf_routes
+from backend.routes import auth
+
+# --- Authentication / Middleware ---
+from backend.middleware.auth_middleware import AuthMiddleware
+from backend.auth.deps import get_current_user
+
+# --- Database / Dependencies ---
+from backend.database import get_db
+from backend.dependencies import get_db  # se estiveres a usar outro arquivo de dependências
+
+
 
 PUBLIC_PATHS = [
    "/api/auth/login",
@@ -506,7 +490,7 @@ app.include_router(vlan_routes)
 app.include_router(acl_routes)
 app.include_router(static_routes)
 app.include_router(ospf_routes)
-app.include_router(router_routes)
+app.include_router(routers_routes)
 
 
 @app.get("/api/report/{router_id}")
@@ -515,7 +499,7 @@ def gerar_relatorio(router_id: int, db: Session = Depends(get_db)):
     filename = generate_pdf(logs)
     return FileResponse(filename, media_type="application/pdf")
 
-from services.cisco_executor import execute_commands
+from backend.services.cisco_executor import execute_commands
 
 @app.post("/api/test/execute")
 def testar_execucao(router_id: int, db: Session = Depends(get_db)):

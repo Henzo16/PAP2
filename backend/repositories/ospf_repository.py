@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.ospf import OspfRoute
+from backend.models.ospf import OspfRoute
 
 class OspfRepository:
 

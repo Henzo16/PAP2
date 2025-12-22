@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.router import Roteador
+from backend.models.router import Roteador
 
 class RouterRepository:
 

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.dhcp import DhcpConfig
+from backend.models.dhcp import DhcpConfig
 
 class DhcpRepository:
 

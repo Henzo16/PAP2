@@ -1,6 +1,6 @@
 import socket
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
-from models.router import Roteador
+from backend.models.router import Roteador
 from sqlalchemy.orm import Session
 
 # Lista de IPs mais prováveis
